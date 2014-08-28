@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package sample;
+package news;
 
 import org.junit.Test;
 import org.wisdom.api.http.Result;

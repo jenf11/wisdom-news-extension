@@ -17,24 +17,24 @@
  * limitations under the License.
  * #L%
  */
-package sample;
+package news;
 
+import org.jsoup.nodes.Document;
 import org.junit.Test;
-import org.wisdom.test.parents.WisdomFluentLeniumTest;
+import org.wisdom.test.http.HttpResponse;
+import org.wisdom.test.parents.WisdomBlackBoxTest;
 
-import static org.fluentlenium.assertj.FluentLeniumAssertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * A UI Test checking that the page contains the correct element.
- * This test is executed in a browser.
+ * A black box test checking that the Welcome page is correctly serve on "/".
  */
-public class FluentLeniumIT extends WisdomFluentLeniumTest {
+public class BlackBoxIT extends WisdomBlackBoxTest {
 
     @Test
-    public void testThatTheWelcomePageContentIsCorrect() {
-        goTo("/");
-        assertThat(find(".lead")).hasText("Wisdom is knowing the right " +
-                "path to take. Integrity is taking it.");
+    public void testThatTheWelcomePageIsServed() throws Exception {
+        HttpResponse<Document> page = get("/").asHtml();
+        assertThat(page.body().title()).isEqualTo("Welcome to Wisdom");
+        assertThat(page.body().getElementsByClass("footer").text()).contains("Wisdom");
     }
-
 }
