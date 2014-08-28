@@ -98,11 +98,7 @@
             <artifactId>wisdom-monitor</artifactId>
             <version>0.6.2</version>
         </dependency>
-        <dependency>
-            <groupId>org.wisdom-framework</groupId>
-            <artifactId>documentation</artifactId>
-            <version>0.6.2</version>
-        </dependency>
+
     </dependencies>
 
     <dependencyManagement>
