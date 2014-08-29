@@ -52,42 +52,46 @@
         </div>
     </div>
     <!-- form article creation -->
-    <div class="container collapse" id="demo" >
+    <div class="container collapse in" id="demo2" >
         <div class="row">
             <div class="col-xs-offset-1 col-xs-6" style="background-color: lightgray;">
                 <h1 class="text-center">Create a new News Article</h1>
                 <form class="form-horizontal" role="form">
-                    <div class="form-group ">
+                    <fieldset id="params">
                         <label class="col-xs-3 control-label" for="articledate">Creation
                             date</label>
                         <div class=" col-xs-7">
                         <input type="date" class="form-control" id="articledate"
-                               placeholder="sept 6th 2014"/>
+                               placeholder="sept 6th 2014" name="dateCreated"/>
                         </div>
                         <label class="col-xs-3 control-label" for="articletitle">Article
                             Title</label>
                         <div class=" col-xs-7">
                             <input type="text" class="form-control" id="articletitle"
-                                   placeholder="required"/>
+                                   placeholder="required" name="title"/>
                         </div>
                         <label class="col-xs-3 control-label" for="articlecontent">Article content
                             </label>
                         <div class="col-xs-7">
                             <textarea type="text" class="form-control" id="articlecontent"
-                                   rows="10" placeholder="Write your article here...."></textarea>
+                                   rows="10" placeholder="Write your article here...."
+                                   name="content"></textarea>
                         </div>
                         <label class="col-xs-3 control-label" for="articleauthor">Article Author
                             (optional)
                            </label>
                         <div class="col-xs-7">
                             <input type="text" class="form-control" id="articleauthor"
-                                   placeholder=""/>
+                                   placeholder="" name="author"/>
                         </div>
-                        <div class="col-xs-12">
-                    <button type="submit" class="btn btn-info btn-xs" id="create">Submit</button>
-                        </div>
-                    </div>
+
+                    </fieldset>
                 </form>
+                <div class="col-xs-12">
+                    <button class="btn btn-info btn-xs"
+                            id="create">Submi
+                        t</button>
+                </div>
             </div>
         </div>
     </div>

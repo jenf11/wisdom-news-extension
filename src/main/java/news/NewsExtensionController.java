@@ -19,11 +19,7 @@
  */
 package news;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.orientechnologies.orient.core.sql.query.OSQLSynchQuery;
 import javassist.util.proxy.Proxy;
-import org.apache.commons.io.IOUtils;
 import org.apache.felix.ipojo.annotations.Requires;
 import org.wisdom.api.DefaultController;
 import org.wisdom.api.annotations.*;
@@ -35,13 +31,8 @@ import org.wisdom.api.templates.Template;
 import org.wisdom.monitor.service.MonitorExtension;
 import org.wisdom.orientdb.object.OrientDbCrud;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validator;
-import java.io.IOException;
-import java.net.URL;
-import java.text.SimpleDateFormat;
+import java.io.File;
 import java.util.*;
-import java.util.concurrent.Callable;
 
 /**
  * Your first Wisdom Controller.
@@ -84,16 +75,28 @@ public class NewsExtensionController extends DefaultController implements Monito
     }
 
     @Authenticated("Monitor-Authenticator")
-    @Route(method = HttpMethod.GET, uri = "/monitor/news/create")
-    public Result create(){
-        fakedata();
-//        NewsArticle newbie = new NewsArticle();
-//        newbie.setAuthor(author);
-//        newbie.setAuthor("bob");
-//        newbie.setContent("stuff");
-//        newbie.setTitle("new title");
-//        newbie.setDateCreated("today");
-//        newsArticleCrud.save(newbie);
+    @Route(method = HttpMethod.POST, uri = "/monitor/news/create")
+    public Result create(@Parameter("dateCreated") String dateCreated,
+                         @Parameter("title") String title,
+                         @Parameter("content") String content,
+                         @Parameter("author") String author){
+       // fakedata();
+        NewsArticle newbie = new NewsArticle();
+        if(!dateCreated.isEmpty()){
+           newbie.setDateCreated(dateCreated);
+        }
+        if(!title.isEmpty()){
+            newbie.setTitle(title);
+        }
+        if(!content.isEmpty()){
+            newbie.setContent(content);
+
+        }
+        if(!author.isEmpty()){
+            newbie.setAuthor(author);
+        }
+
+        newsArticleCrud.save(newbie);
         return ok();
     }
 
@@ -114,7 +117,7 @@ public class NewsExtensionController extends DefaultController implements Monito
             articleToUpdate.setAuthor("bob");
             articleToUpdate.setContent("stuff");
             articleToUpdate.setTitle("new title");
-            articleToUpdate.setDataModified("today");
+            articleToUpdate.setDateModified("today");
         }
         return ok();
     }
@@ -129,14 +132,23 @@ public class NewsExtensionController extends DefaultController implements Monito
        return ok(list).json();
 
     }
+    @Route(method = HttpMethod.GET, uri ="/new/list/generated")
+    public Result generate(){
+        List<NewsArticle> list = new LinkedList<NewsArticle>();
+        for (NewsArticle article : newsArticleCrud.findAll()) {
+            list.add(article);
+        }
+        return ok();
+    }
 
     public void fakedata(){
         NewsArticle articleToUpdate = new NewsArticle();
         for(int i = 0; i <5;i++){
             articleToUpdate.setAuthor("bob"+i);
-            articleToUpdate.setContent("stuff"+i);
-            articleToUpdate.setTitle("new title"+i);
-            articleToUpdate.setDataModified("today"+i);
+            articleToUpdate.setContent("stuff" + i);
+            articleToUpdate.setTitle("new title" + i);
+            articleToUpdate.setDateCreated("sept 1 204");
+            articleToUpdate.setDateModified("today" + i);
             newsArticleCrud.save(articleToUpdate);
         }
     }

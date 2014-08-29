@@ -21,7 +21,7 @@ public class NewsArticle {
     @NotNull
     private String dateCreated;
 
-    private String dataModified;
+    private String dateModified;
 
 
     public NewsArticle(){
@@ -60,12 +60,12 @@ public class NewsArticle {
         this.dateCreated = dateCreated;
     }
 
-    public String getDataModified() {
-        return dataModified;
+    public String getDateModified() {
+        return dateModified;
     }
 
-    public void setDataModified(String dataModified) {
-        this.dataModified = dataModified;
+    public void setDateModified(String dateModified) {
+        this.dateModified = dateModified;
     }
 
     public String getAuthor() {

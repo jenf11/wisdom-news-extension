@@ -26,6 +26,8 @@ $(document).ready(function () {
             }
         });
     //Tooltip
+
+
     $("a").tooltip();
     $("#refresh").click(function () {
         load();
@@ -40,17 +42,51 @@ $(document).ready(function () {
     });
     //load extension list
     load();
+    $('#create').click(function () {
+        alert("i clicked the button");
+
+
+            var data = $('form').serialize();
+            alert("serialized data? "+data);
+            var addy = "/monitor/news/create";
+            var act= "post";
+
+
+
+            //not used because of serialize forma data
+           var values = {};
+            $.each($("#params").find("input"), function (index, input) {
+                console.log(input);
+
+                if (input.type == "checkbox") {
+
+                    console.log($(input).prop('checked'));
+                    values[input.name] = $(input).prop('checked');     //only works if there is one checkbox
+                }
+                else {
+                    if(input.value!="") {
+                        values[input.name] = input.value;  }
+                }
+
+            });
+            console.log(values);
+            var v2=$.param(values);
+            console.log(v2);    //serialize object
+            console.log( addy+data+" "+act);
+            alert(addy+data+" "+act);
+          create(addy+"?"+data,act);
+
+       // $('#demo').collapse;
+    });
 
 });
 
 /* create a new extension from a json file, calls the upload method*/
-function create(ext) {
-    var url = "http://" + window.location.host + "/registry/upload";
-    // var url = /*[[${#routes.route('upload')}]]*/ null;
+function create(address,action) {
     $.ajax({
-        type: "POST",
-        url: url,
-        data: { url: ext }
+        type: action,
+        url: address,
+        data: { url: address }
     }).done(function (data) {
         // console.log(data);
         //if error message display
