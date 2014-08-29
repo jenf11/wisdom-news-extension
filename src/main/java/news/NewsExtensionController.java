@@ -98,7 +98,7 @@ public class NewsExtensionController extends DefaultController implements Monito
     }
 
     @Authenticated("Monitor-Authenticator")
-    @Route(method = HttpMethod.DELETE, uri = "/monitor/news/list/{id}")
+    @Route(method = HttpMethod.DELETE, uri = "/news/list/{id}")
     public Result delete(@Parameter("id") String id){
         if(newsArticleCrud.exists(id)){
             newsArticleCrud.delete(id);
@@ -107,7 +107,7 @@ public class NewsExtensionController extends DefaultController implements Monito
     }
 
     @Authenticated("Monitor-Authenticator")
-    @Route(method = HttpMethod.POST, uri = "/monitor/news/list/{id}")
+    @Route(method = HttpMethod.POST, uri = "/news/list/{id}")
     public Result update(@Parameter("id") String id){
         if(newsArticleCrud.exists(id)){
             NewsArticle articleToUpdate = newsArticleCrud.findOne(id);
