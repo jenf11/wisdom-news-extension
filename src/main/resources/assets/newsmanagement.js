@@ -124,7 +124,7 @@ function remove(ext) {
 }
 /* resets form to initial state */
 function resetForm(){
-    alert("reset");
+
     $('#formtitle').text("Create News Article");
     $("#idheading").text("");
     $("#articletitle").val("");
