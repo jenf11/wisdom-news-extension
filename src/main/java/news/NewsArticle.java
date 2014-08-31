@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Entity
 @JsonIgnoreProperties("handler")
@@ -18,11 +19,11 @@ public class NewsArticle {
     private String content;
 
     private String author;
+
     @NotNull
-    private String dateCreated;
+    private Date dateCreated;
 
-    private String dateModified;
-
+    private Date dateModified;
 
     public NewsArticle(){
         //constructor
@@ -52,19 +53,19 @@ public class NewsArticle {
         this.content = content;
     }
 
-    public String getDateCreated() {
+    public Date getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(String dateCreated) {
+    public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
     }
 
-    public String getDateModified() {
+    public Date getDateModified() {
         return dateModified;
     }
 
-    public void setDateModified(String dateModified) {
+    public void setDateModified(Date dateModified) {
         this.dateModified = dateModified;
     }
 

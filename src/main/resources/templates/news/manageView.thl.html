@@ -35,7 +35,7 @@
     <!-- the actual content goes there -->
 
     <h1 class="page-header">Wisdom News Manager</h1>
-    <!-- extension counter -->
+    <!-- article counter -->
     <div class="container">
         <div class="row">
             <div class=" col-sm-2 placeholder">
@@ -43,62 +43,61 @@
 
                 <p class="text-muted text-center">Wisdom News Articles</p>
             </div>
-            <div class="col-sm-2 ">
-                <button type="button" class="btn btn-primary btn-sm"
-                                           data-toggle="collapse" data-target="#demo"
-                                           id="create-atricle">Create new Article</button> </div>
-            <div class="col-sm-2 "><button class="" id="generate-news">Generate News</button> </div>
-            <div class="col-sm-2 ">Number of articles to generate: <input/></div>
         </div>
     </div>
+
     <!-- form article creation -->
-    <div class="container collapse in" id="demo2" >
-        <div class="row">
-            <div class="col-xs-offset-1 col-xs-6" style="background-color: lightgray;">
-                <h1 class="text-center">Create a new News Article</h1>
+    <div class="container ">
+        <div class="row" style="margin-bottom: 25px">
+            <a class="" data-toggle="collapse" href="#demo">
+                <h1 class="" id="formtitle">Create a new News Article</h1></a>
+
+            <div class="col-xs-5 collapse" id="demo" style="background-color:
+             rgba(77, 181, 255, 0.38);">
+                <p class="" id="idheading"></p>
+
                 <form class="form-horizontal" role="form">
                     <fieldset id="params">
-                        <label class="col-xs-3 control-label" for="articledate">Creation
-                            date</label>
-                        <div class=" col-xs-7">
-                        <input type="date" class="form-control" id="articledate"
-                               placeholder="sept 6th 2014" name="dateCreated"/>
-                        </div>
-                        <label class="col-xs-3 control-label" for="articletitle">Article
-                            Title</label>
-                        <div class=" col-xs-7">
+
+                        <div class="form-group col-xs-12" id="titlegroup">
+                            <label class="control-label" for="articletitle">Article
+                                Title</label>
                             <input type="text" class="form-control" id="articletitle"
                                    placeholder="required" name="title"/>
                         </div>
-                        <label class="col-xs-3 control-label" for="articlecontent">Article content
+
+                        <div class="form-group col-xs-12" id="contentgroup">
+                            <label class="control-label" for="articlecontent">Article content
                             </label>
-                        <div class="col-xs-7">
                             <textarea type="text" class="form-control" id="articlecontent"
-                                   rows="10" placeholder="Write your article here...."
-                                   name="content"></textarea>
+                                      rows="10" placeholder="Write your article here...."
+                                      name="content"></textarea>
                         </div>
-                        <label class="col-xs-3 control-label" for="articleauthor">Article Author
-                            (optional)
-                           </label>
-                        <div class="col-xs-7">
+
+                        <div class="form-group col-xs-12">
+                            <label class="control-label" for="articleauthor">Article Author
+                            </label>
                             <input type="text" class="form-control" id="articleauthor"
-                                   placeholder="" name="author"/>
+                                   placeholder="optional" name="author"/>
                         </div>
+                        <input id="genid" type="hidden" name="genid" value="void"/>
 
                     </fieldset>
                 </form>
-                <div class="col-xs-12">
-                    <button class="btn btn-info btn-xs"
-                            id="create">Submi
-                        t</button>
+                <div class="col-xs-11" id="buttondiv" style="margin: 10px">
+                    <button class="btn btn-info btn-xs pull-right" id="create">Submit</button>
+                    <button class="btn btn-info btn-xs pull-right" id="cancel">Cancel</button>
+                    <button class="btn btn-info btn-xs pull-right" id="edit">Update</button>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- search bar and refresh -->
     <div class="container">
         <div class="row">
             <div class="col-md-10">
-                <input class="input-sm" id="filter" placeholder="Search"/>
+                <input class="input-sm " id="filter" placeholder="Search"/>
                 <button class="btn btn-info btn-xs pull-right" id="refresh"><span
                         class="glyphicon glyphicon-refresh"></span></button>
                 <table class="table table-striped table-condensed" id="table">
@@ -122,12 +121,10 @@
     <script src="/libs/js/jquery.tablesorter.min.js"></script>
     <script src="/libs/js/jquery.tablesorter.widgets.min.js"></script>
     <script src="/assets/libs/jquery.filtertable.min.js"></script>
-    <script src="/assets/libs/newsmanagement.js"></script>
+    <script src="/assets/libs/jquery-dateFormat.min.js"></script>
 
+    <script src="/assets/newsmanagement.js"></script>
 
-    <script>
-        var hasAccessToActionBar = true;
-    </script>
 </div>
 </body>
 </html>
