@@ -136,7 +136,7 @@ function resetForm(){
     $("#demo").collapse('show');
 
 }
-/* retrieve a speficic article from database */
+/* retrieve a specific article from database */
 function retrieveRecord(idnumber) {
 
     var url = "http://" + window.location.host + "/news/article/" + encodeURIComponent(idnumber);
@@ -223,20 +223,10 @@ function createTable(data) {
 }
 /* format the date */
 function prettyDate(date) {
-
-//    var m_names = new Array("January", "February", "March",
-//        "April", "May", "June", "July", "August", "September",
-//        "October", "November", "December");
-
     if (date == null) {
         return "";
     }
     var d = new Date(date);
-//    var day = d.getDate();
-//    var month = d.getMonth();
-//    var year = d.getFullYear();
-//    var wholedate = (day + "-" + m_names[month] + "-" + year);
-
     var s = $.format.prettyDate(d); //requires plugin
     //var s = $.format.date(d,"dd-MMMM-yyyy HH:mm:ss");
     return s;

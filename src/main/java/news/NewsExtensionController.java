@@ -22,9 +22,13 @@ package news;
 import com.orientechnologies.orient.core.sql.query.OSQLSynchQuery;
 import javassist.util.proxy.Proxy;
 import org.apache.felix.ipojo.annotations.Requires;
+import org.joda.time.Duration;
 import org.wisdom.api.DefaultController;
 import org.wisdom.api.annotations.*;
+import org.wisdom.api.cache.Cache;
+import org.wisdom.api.cache.Cached;
 import org.wisdom.api.content.Json;
+import org.wisdom.api.http.HeaderNames;
 import org.wisdom.api.http.HttpMethod;
 import org.wisdom.api.http.Result;
 import org.wisdom.api.security.Authenticated;
@@ -111,6 +115,7 @@ public class NewsExtensionController extends DefaultController implements Monito
 
     /**
      * Deletes a specified article from the database.
+     *
      * @param id used to identify the article.
      * @return
      */
@@ -127,13 +132,15 @@ public class NewsExtensionController extends DefaultController implements Monito
         return ok();
     }
 
-    /**   TODO this method does not correctly check constraints .
+    /**
+     * TODO this method does not correctly check constraints .
      * Update the specified news article.
-     * @param id  identifies the article can't be null.
+     *
+     * @param id      identifies the article can't be null.
      * @param title   should not be empty.
-     * @param content  should not be empty.
+     * @param content should not be empty.
      * @param author  is optional.
-     * @return  ok.
+     * @return ok.
      */
     @Authenticated("Monitor-Authenticator")
     @Route(method = HttpMethod.POST, uri = "/news/list/{id}")
@@ -156,7 +163,8 @@ public class NewsExtensionController extends DefaultController implements Monito
 
     /**
      * Returns the specified news article.
-     * @param id   used to identify the article.
+     *
+     * @param id used to identify the article.
      * @return ok.
      */
     @Route(method = HttpMethod.GET, uri = "/news/article/{id}")
@@ -171,6 +179,7 @@ public class NewsExtensionController extends DefaultController implements Monito
 
     /**
      * Lists every article in the database.
+     *
      * @return the list of articles as a json object.
      */
     @Route(method = HttpMethod.GET, uri = "/news/list")
@@ -185,26 +194,39 @@ public class NewsExtensionController extends DefaultController implements Monito
 
     }
 
+    @Requires
+    Cache cache;
+
     /**
      * Generate a list of articles from the database. Listed in descending (newest to oldest) order.
+     *
      * @param genNum required paramater used to limit the results returned. Can be larger than
      *               the actual number of objects in the database.
      * @return the list of objects found as a json structure.
      */
     @Route(method = HttpMethod.GET, uri = "/news/list/generated/{genNum}")
-    public Result generate(@Parameter("genNum") String genNum) {
-        genNum = genNum;
-        int num = Integer.valueOf(genNum);
+    public Result generate(@Parameter("genNum") int genNum) {
+        String uri = context().request().uri();
+        Result cached = (Result) cache.get(uri);
+        if (cached != null  &&
+                ! HeaderNames.NOCACHE_VALUE
+                        .equalsIgnoreCase(context().header(HeaderNames.CACHE_CONTROL))) {
+            return cached;
+        }
+
         List<NewsArticle> list = new LinkedList<NewsArticle>();
         List<NewsArticle> query = newsArticleCrud.query(new OSQLSynchQuery<NewsArticle>("select *" +
-                " from NewsArticle order by dateModified DESC limit " + num));
+                " from NewsArticle order by dateModified DESC limit " + genNum));
         list.addAll(query);
-        return ok(list).json();
+        Result result = ok(list).json();
+        cache.set(uri, result, Duration.standardHours(1));
+        return result;
     }
 
     /**
      * Creates the label in the wisdom monitor.
-     * @return  name of label.
+     *
+     * @return name of label.
      */
     @Override
     public String label() {
@@ -213,7 +235,8 @@ public class NewsExtensionController extends DefaultController implements Monito
 
     /**
      * Designates the path of the page to be displayed.
-     * @return  the path.
+     *
+     * @return the path.
      */
     @Override
     public String url() {
@@ -222,7 +245,8 @@ public class NewsExtensionController extends DefaultController implements Monito
 
     /**
      * Desginates the category in the wisdom monitor to display the above label.
-     * @return  name of category.
+     *
+     * @return name of category.
      */
     @Override
     public String category() {
