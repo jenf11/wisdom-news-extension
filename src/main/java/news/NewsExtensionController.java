@@ -34,8 +34,6 @@ import org.wisdom.orientdb.object.OrientDbCrud;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;

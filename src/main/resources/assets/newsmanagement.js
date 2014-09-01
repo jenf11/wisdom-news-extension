@@ -80,7 +80,7 @@ function checkInputs() {
         result=false;
     } else {
         $("#titlegroup").removeClass("has-error has-feedback");
-        $("#articletitle").attr("placeholder", "");
+        $("#articletitle").attr("placeholder", "required");
     }
 
     if($("#articlecontent").val()==""){
@@ -224,18 +224,18 @@ function createTable(data) {
 /* format the date */
 function prettyDate(date) {
 
-    var m_names = new Array("January", "February", "March",
-        "April", "May", "June", "July", "August", "September",
-        "October", "November", "December");
+//    var m_names = new Array("January", "February", "March",
+//        "April", "May", "June", "July", "August", "September",
+//        "October", "November", "December");
 
     if (date == null) {
         return "";
     }
     var d = new Date(date);
-    var day = d.getDate();
-    var month = d.getMonth();
-    var year = d.getFullYear();
-    var wholedate = (day + "-" + m_names[month] + "-" + year);
+//    var day = d.getDate();
+//    var month = d.getMonth();
+//    var year = d.getFullYear();
+//    var wholedate = (day + "-" + m_names[month] + "-" + year);
 
     var s = $.format.prettyDate(d); //requires plugin
     //var s = $.format.date(d,"dd-MMMM-yyyy HH:mm:ss");
