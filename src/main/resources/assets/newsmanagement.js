@@ -55,7 +55,7 @@ $(document).ready(function () {
 });
 
 function submitForm() {
-    var data = $('form').serialize();;
+    var data = $('form').serialize();
     var addy;
     var act="post";
     if ($("#genid").val() == "void") {
@@ -64,10 +64,10 @@ function submitForm() {
     }
     else {
 
-        addy = "http://" + window.location.host + "/news/list/" + encodeURIComponent($("#genid").val());
+        addy = "http://" + window.location.host + "/news/list?id=" + encodeURIComponent($("#genid").val());
     }
     if (checkInputs()) {
-        create(addy + "?" + data, act);
+        create(addy + "&" + data, act);
     }
 }
 
@@ -114,7 +114,7 @@ function create(address, action) {
 /*remove the selected article based on the database id number */
 function remove(ext) {
     $.ajax({
-        url: "http://" + window.location.host + "/news/list/" + encodeURIComponent(ext),
+        url: "http://" + window.location.host + "/news/list?id=" + encodeURIComponent(ext),
         type: 'DELETE',
         complete: function (result) {
             $("#error-msg").html("").removeClass("alert-success").removeClass("alert-danger").removeClass("alert-warning");
@@ -139,7 +139,7 @@ function resetForm(){
 /* retrieve a specific article from database */
 function retrieveRecord(idnumber) {
 
-    var url = "http://" + window.location.host + "/news/article/" + encodeURIComponent(idnumber);
+    var url = "http://" + window.location.host + "/news/article?id=" + encodeURIComponent(idnumber);
     $.getJSON(url, function (result) {
 
 
