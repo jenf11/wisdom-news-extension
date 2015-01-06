@@ -38,6 +38,7 @@ import org.wisdom.orientdb.object.OrientDbCrud;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -120,8 +121,8 @@ public class NewsExtensionController extends DefaultController implements Monito
      * @return
      */
     @Authenticated("Monitor-Authenticator")
-    @Route(method = HttpMethod.DELETE, uri = "/news/list/{id}")
-    public Result delete(@Parameter("id") String id) {
+    @Route(method = HttpMethod.DELETE, uri = "/news/list")
+    public Result delete(@NotNull @Parameter("id") String id) {
 
         newsArticleCrud.delete(id);
         //exsists allways returns false ?
@@ -143,8 +144,8 @@ public class NewsExtensionController extends DefaultController implements Monito
      * @return ok.
      */
     @Authenticated("Monitor-Authenticator")
-    @Route(method = HttpMethod.POST, uri = "/news/list/{id}")
-    public Result update(@Parameter("id") String id,
+    @Route(method = HttpMethod.POST, uri = "/news/list")
+    public Result update(@NotNull @Parameter("id") String id,
                          @Parameter("title") String title,
                          @Parameter("content") String content,
                          @Parameter("author") String author) {
@@ -167,8 +168,8 @@ public class NewsExtensionController extends DefaultController implements Monito
      * @param id used to identify the article.
      * @return ok.
      */
-    @Route(method = HttpMethod.GET, uri = "/news/article/{id}")
-    public Result getArticle(@Parameter("id") String id) {
+    @Route(method = HttpMethod.GET, uri = "/news/article")
+    public Result getArticle(@NotNull @Parameter("id") String id) {
         System.out.println("get id" + id);
         NewsArticle articleToUpdate = newsArticleCrud.findOne(id);
         if (articleToUpdate != null) {
@@ -200,7 +201,7 @@ public class NewsExtensionController extends DefaultController implements Monito
     /**
      * Generate a list of articles from the database. Listed in descending (newest to oldest) order.
      *
-     * @param genNum required paramater used to limit the results returned. Can be larger than
+     * @param genNum required parameter used to limit the results returned. Can be larger than
      *               the actual number of objects in the database.
      * @return the list of objects found as a json structure.
      */
