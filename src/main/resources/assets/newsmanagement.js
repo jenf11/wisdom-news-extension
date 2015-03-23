@@ -35,15 +35,11 @@ $(document).ready(function () {
     //load article list
     load();
 
-    $('#cancel').hide();
-
-    $('#edit').hide();
-
-    $('#cancel').click(function () {
+    $('#cancel').hide().click(function () {
         resetForm();
     });
 
-    $('#edit').click(function () {
+    $('#edit').hide().click(function () {
         submitForm();
     });
 
@@ -58,48 +54,50 @@ function submitForm() {
     var data = $('form').serialize();
     var addy;
     var act="post";
-    if ($("#genid").val() == "void") {
-
+    var $genid = $("#genid");
+    if ($genid.val() == "void") {
         addy = "/monitor/news/create";
     }
     else {
 
-        addy = "http://" + window.location.host + "/news/list?id=" + encodeURIComponent($("#genid").val());
+        addy = "http://" + window.location.host + "/news/list?id=" + encodeURIComponent($genid.val());
     }
     if (checkInputs()) {
-        create(addy + "&" + data, act);
+        create(addy, data, act);
     }
 }
 
 /* Check is the input fields that are required are not blank */
 function checkInputs() {
     var result=true;
-    if($("#articletitle").val()==""){
+    var $articletitle = $("#articletitle");
+    if($articletitle.val()==""){
         $("#titlegroup").addClass("has-error has-feedback");
-        $("#articletitle").attr("placeholder", "A title is required");
+        $articletitle.attr("placeholder", "A title is required");
         result=false;
     } else {
         $("#titlegroup").removeClass("has-error has-feedback");
-        $("#articletitle").attr("placeholder", "required");
+        $articletitle.attr("placeholder", "required");
     }
 
-    if($("#articlecontent").val()==""){
+    var $articlecontent = $("#articlecontent");
+    if($articlecontent.val()==""){
         $("#contentgroup").addClass("has-error has-feedback");
-        $("#articlecontent").attr("placeholder", "Content is required");
+        $articlecontent.attr("placeholder", "Content is required");
         result=false;
     }else {
         $("#contentgroup").removeClass("has-error has-feedback");
-        $("#articlecontent").attr("placeholder", "Write your content here..");
+        $articlecontent.attr("placeholder", "Write your content here..");
     }
     return result;
 }
 
 /* create a new extension from a json file, calls the upload method*/
-function create(address, action) {
+function create(address, data, action) {
     $.ajax({
         type: action,
         url: address,
-        data: { url: address }
+        data: data
     }).done(function (data) {
         // console.log(data);
         //if error message display
@@ -116,7 +114,7 @@ function remove(ext) {
     $.ajax({
         url: "http://" + window.location.host + "/news/list?id=" + encodeURIComponent(ext),
         type: 'DELETE',
-        complete: function (result) {
+        complete: function () {
             $("#error-msg").html("").removeClass("alert-success").removeClass("alert-danger").removeClass("alert-warning");
             load();
         }
@@ -227,9 +225,7 @@ function prettyDate(date) {
         return "";
     }
     var d = new Date(date);
-    var s = $.format.prettyDate(d); //requires plugin
-    //var s = $.format.date(d,"dd-MMMM-yyyy HH:mm:ss");
-    return s;
+    return $.format.prettyDate(d);
 }
 
 /*load the list of articles as json */
